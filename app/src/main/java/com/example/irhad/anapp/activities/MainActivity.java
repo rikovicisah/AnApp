@@ -30,7 +30,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
+    public static TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
     private RecyclerView recyclerView;
@@ -71,17 +71,26 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                setTabActive(tab.getPosition());
+                readJSON();
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                setTabActive(tab.getPosition());
+                readJSON();
             }
+
         });
+
+        System.out.println("------------------------------------------------POZVAN " + getTabActive());
 
         //volley
         requestQueue = Volley.newRequestQueue(this);
+        readJSON();
+
+        TabLayout.Tab tab = tabLayout.getTabAt(getTabActive());
+        tab.select();
         readJSON();
     }
 

@@ -1,5 +1,7 @@
 package com.example.irhad.anapp.activities;
 
+import android.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -27,10 +29,11 @@ public class DetailsActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
         String naslov = this.getIntent().getExtras().getString("naslov");
         String opis = this.getIntent().getExtras().getString("opis");
         String slika = this.getIntent().getExtras().getString("slika");
-        MainActivity.setTabActive(this.getIntent().getExtras().getInt("tab"));
+
 
         details_txtNaslov.setText(naslov);
         details_txtOpis.setText(opis);
