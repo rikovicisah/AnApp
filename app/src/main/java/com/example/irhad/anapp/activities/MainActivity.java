@@ -6,6 +6,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -147,6 +151,31 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setTabActive(int tabActiveD) {
         tabActive = tabActiveD;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search,menu);
+        MenuItem menuItem = menu.findItem(R.id.search_menu);
+        SearchView searchView = (SearchView)menuItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(getApplicationContext(), "" + newText, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 
 }
