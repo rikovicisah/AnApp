@@ -16,6 +16,7 @@
         app:tabMode="fixed"
         app:tabGravity="fill"
         app:tabIndicatorColor="@android:color/black"
+        android:onClick="tabClick"
         >
     </android.support.design.widget.TabLayout>
 
