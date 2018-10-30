@@ -54,15 +54,21 @@ public class DetailsActivity extends AppCompatActivity {
         MenuItem menuItem = menu.findItem(R.id.search_menu);
         SearchView searchView = (SearchView)menuItem.getActionView();
 
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                if(query.length() > 2){
+
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getApplicationContext(), "" + newText, Toast.LENGTH_LONG).show();
+                if(newText.length() > 2){
+
+                }
                 return false;
             }
         });

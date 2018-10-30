@@ -14,4 +14,9 @@ public class Values {
     public static void setListafilmovaSerija(List<MoviesShowsModel> listafilmovaSerija) {
         Values.listafilmovaSerija = listafilmovaSerija;
     }
+
+    public static void clear(){
+        if(listafilmovaSerija != null && listafilmovaSerija.size() > 0)
+            listafilmovaSerija.clear();
+    }
 }
