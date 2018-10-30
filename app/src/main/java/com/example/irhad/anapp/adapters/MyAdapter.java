@@ -65,7 +65,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return listafilmova.size();
+        return (listafilmova != null && listafilmova.size() > 0)? listafilmova.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
