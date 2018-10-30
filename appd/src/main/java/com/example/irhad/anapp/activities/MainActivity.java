@@ -73,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 setTabActive(tab.getPosition());
                 readJSON();
+                if(getTabActive() == 0)
+                    new movies_Fragment();
+                else
+                    tvShows_Fragment.ispis();
             }
 
             @Override
@@ -169,19 +173,10 @@ public class MainActivity extends AppCompatActivity {
             String url;
             @Override
             public boolean onQueryTextSubmit(String query) {
-<<<<<<< HEAD
                 if(query.length() > 2){
                     listaFilmovaSerija.clear();
                     JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET,
                             getSearchURL(query), null,
-=======
-
-                if(query.length() > 2){
-                    url = "https://api.themoviedb.org/3/search/movie?query="+query+"&api_key=b273d564e7a35e4008311b291409cf9f";
-                    listaFilmovaSerija.clear();
-                    JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET,
-                            url, null,
->>>>>>> ef1f7223b92ea46987354ae25a3b6e800a078875
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
@@ -200,19 +195,11 @@ public class MainActivity extends AppCompatActivity {
                                                     obj2.getInt("id")));
                                         }
                                         Values.setListafilmovaSerija(listaFilmovaSerija);
-<<<<<<< HEAD
 
                                         if(getTabActive() == 0)
                                             new movies_Fragment();
                                         else
                                             tvShows_Fragment.ispis();
-=======
-//
-//                                        if(getTabActive() == 0)
-//                                            new movies_Fragment();
-//                                        else
-//                                            tvShows_Fragment.ispis();
->>>>>>> ef1f7223b92ea46987354ae25a3b6e800a078875
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -230,7 +217,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }else{
-
+                    if(getTabActive() == 0)
+                        new movies_Fragment();
+                    else
+                        tvShows_Fragment.ispis();
                 }
                 return false;
             }
