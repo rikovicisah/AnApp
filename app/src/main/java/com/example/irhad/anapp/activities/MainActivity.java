@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 setTabActive(tab.getPosition());
                 readJSON();
                 if(getTabActive() == 0)
-                    new movies_Fragment();
+                    movies_Fragment.ispis();
                 else
                     tvShows_Fragment.ispis();
             }
@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout.Tab tab = tabLayout.getTabAt(getTabActive());
         tab.select();
     }
+
 
     private void readJSON(){
         listaFilmovaSerija.clear();
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),"Desila se greska, provjerite konekciju",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Please check your connection",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -142,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
     }//readJSON
 
     private String get_URL(){
-        return (getTabActive() == 0)? "https://api.themoviedb.org/3/movie/top_rated?api_key=b273d564e7a35e4008311b291409cf9f"
+        return (getTabActive() == 0)?
+                "https://api.themoviedb.org/3/movie/top_rated?api_key=b273d564e7a35e4008311b291409cf9f"
                 : "https://api.themoviedb.org/3/tv/top_rated?api_key=b273d564e7a35e4008311b291409cf9f";
     }
 
@@ -197,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                                         Values.setListafilmovaSerija(listaFilmovaSerija);
 
                                         if(getTabActive() == 0)
-                                            new movies_Fragment();
+                                            movies_Fragment.ispis();
                                         else
                                             tvShows_Fragment.ispis();
 
@@ -217,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }else{
+                    readJSON();
                     if(getTabActive() == 0)
                         new movies_Fragment();
                     else
@@ -227,11 +230,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(newText.length() > 2){
-                    url = "https://api.themoviedb.org/3/search/movie?query="+newText+"&api_key=b273d564e7a35e4008311b291409cf9f";
-
-
-                }
                 return false;
             }
         });
