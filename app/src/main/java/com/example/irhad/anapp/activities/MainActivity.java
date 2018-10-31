@@ -1,6 +1,6 @@
 package com.example.irhad.anapp.activities;
 
-import android.os.Parcelable;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -24,7 +23,6 @@ import com.example.irhad.anapp.Values;
 import com.example.irhad.anapp.adapters.ViewPagerAdapter;
 import com.example.irhad.anapp.model.MoviesShowsModel;
 import com.example.irhad.anapp.movies_Fragment;
-import com.example.irhad.anapp.tools.ReadJson;
 import com.example.irhad.anapp.tvShows_Fragment;
 
 import org.json.JSONArray;
@@ -41,16 +39,13 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter viewPagerAdapter;
     private RecyclerView recyclerView;
     private List<MoviesShowsModel> listaFilmovaSerija;
-
     private static int tabActive;
-
     private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         recyclerView = findViewById(R.id.recycler_Movies);
 
@@ -80,14 +75,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
 
         });
 
@@ -98,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout.Tab tab = tabLayout.getTabAt(getTabActive());
         tab.select();
     }
-
 
     private void readJSON(){
         listaFilmovaSerija.clear();
@@ -148,12 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 : "https://api.themoviedb.org/3/tv/top_rated?api_key=b273d564e7a35e4008311b291409cf9f";
     }
 
-    private String getSearchURL(String query){
-        return (getTabActive() == 0)?
-                "https://api.themoviedb.org/3/search/movie?query="+query+"&api_key=b273d564e7a35e4008311b291409cf9f"
-                :"https://api.themoviedb.org/3/search/tv?query="+query+"&api_key=b273d564e7a35e4008311b291409cf9f";
-    }
-
     public static int getTabActive() {
         return tabActive;
     }
@@ -161,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
     public static void setTabActive(int tabActiveD) {
         tabActive = tabActiveD;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,56 +155,17 @@ public class MainActivity extends AppCompatActivity {
         SearchView searchView = (SearchView)menuItem.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            String url;
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(query.length() > 2){
-                    listaFilmovaSerija.clear();
-                    JsonObjectRequest jsonObjectRequest2 = new JsonObjectRequest(Request.Method.GET,
-                            getSearchURL(query), null,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
-                                    try {
-                                        String naslov = "";
-                                        JSONObject obj = new JSONObject(response.toString());
-                                        JSONArray arr = obj.getJSONArray("results");
-
-                                        for (int i = 0; i < arr.length(); i++){
-                                            JSONObject obj2 = arr.getJSONObject(i);
-                                            naslov = (getTabActive() == 0)? obj2.getString("title") : obj2.getString("name");
-                                            listaFilmovaSerija.add(new MoviesShowsModel(naslov,
-                                                    obj2.getString("poster_path"),
-                                                    obj2.getString("overview"),
-                                                    obj2.getString("backdrop_path"),
-                                                    obj2.getInt("id")));
-                                        }
-                                        Values.setListafilmovaSerija(listaFilmovaSerija);
-
-                                        if(getTabActive() == 0)
-                                            movies_Fragment.ispis();
-                                        else
-                                            tvShows_Fragment.ispis();
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(),"Desila se greska, provjerite konekciju",Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                    requestQueue.add(jsonObjectRequest2);
-
-
+                    Intent searchActivity = new Intent(getApplicationContext(), SearchResultActivity.class);
+                    searchActivity.putExtra("query", query);
+                    startActivity(searchActivity);
 
                 }else{
                     readJSON();
                     if(getTabActive() == 0)
-                        new movies_Fragment();
+                        movies_Fragment.ispis();
                     else
                         tvShows_Fragment.ispis();
                 }
@@ -235,10 +179,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    public void tabClick(View view){
-
     }
 
 }

@@ -33,6 +33,7 @@ public class DetailsActivity extends AppCompatActivity {
         details_image = findViewById(R.id.details_image);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
         String naslov = this.getIntent().getExtras().getString("naslov");
@@ -74,5 +75,18 @@ public class DetailsActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
     }
 }
