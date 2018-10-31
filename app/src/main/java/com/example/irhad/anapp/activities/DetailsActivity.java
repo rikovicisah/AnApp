@@ -40,44 +40,10 @@ public class DetailsActivity extends AppCompatActivity {
         String opis = this.getIntent().getExtras().getString("opis");
         String slika = this.getIntent().getExtras().getString("slika");
 
-
         details_txtNaslov.setText(naslov);
         details_txtOpis.setText(opis);
         Picasso.with(this).load(slika).into(details_image);
-
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.search,menu);
-        MenuItem menuItem = menu.findItem(R.id.search_menu);
-        SearchView searchView = (SearchView)menuItem.getActionView();
-
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                if(query.length() > 2){
-
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if(newText.length() > 2){
-
-                }
-                return false;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
 
     @Override
     public void onBackPressed() {
