@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     readJSON();
                     if(getTabActive() == 0)
-                        new movies_Fragment();
+                        movies_Fragment.ispis();
                     else
                         tvShows_Fragment.ispis();
                 }
