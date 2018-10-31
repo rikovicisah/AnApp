@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTabActive(0);
 
         recyclerView = findViewById(R.id.recycler_Movies);
 
@@ -68,8 +69,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 setTabActive(tab.getPosition());
                 readJSON();
-                if(getTabActive() == 0)
+                if(getTabActive() == 0) {
                     movies_Fragment.ispis();
+                }
                 else
                     tvShows_Fragment.ispis();
             }
@@ -78,16 +80,22 @@ public class MainActivity extends AppCompatActivity {
             public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {readJSON();}
 
         });
 
         //volley
         requestQueue = Volley.newRequestQueue(this);
         readJSON();
+        if(getTabActive() == 0) {
+            new movies_Fragment();
+        }
+        else
+            tvShows_Fragment.ispis();
 
         TabLayout.Tab tab = tabLayout.getTabAt(getTabActive());
         tab.select();
+
     }
 
     private void readJSON(){
